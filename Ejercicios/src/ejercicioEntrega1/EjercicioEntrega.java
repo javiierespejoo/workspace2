@@ -21,16 +21,13 @@ public class EjercicioEntrega {
 			FileWriter escritor = new FileWriter(fichero2,true);
 			BufferedWriter cestaEscritura = new BufferedWriter(escritor);
 		
-			String frase = cestaLectura.readLine();
-		
 			
 			
 			int caracter = lector.read();
 			int cont = 0;
-			while(caracter != '\n') {
-				if (caracter < 0) {
+			while(caracter > 0 ) {
 					String cadena = "";
-					while(caracter != ',') {
+					while(caracter != ',' && caracter != '\n' && caracter > 0) {
 						cadena = cadena + (char)caracter;
 						caracter = lector.read();
 					}
@@ -43,14 +40,18 @@ public class EjercicioEntrega {
 						cestaEscritura.write("Apellidos: "+ cadena);
 						cestaEscritura.newLine();
 					}else if (cont == 3) {
-						cestaEscritura.write("Fecha Nacimiento "+ cadena);
+						cestaEscritura.write("Altura: "+ cadena);
+						cestaEscritura.newLine();
+					}else if(cont == 4){
+						cestaEscritura.write("Fecha Nacimiento: "+ cadena);
 						cestaEscritura.newLine();
 					}else {
 						cestaEscritura.write("Teléfono: "+ cadena);
 						cestaEscritura.newLine();
+						cont=0;
 					}
 					caracter = lector.read();
-				}
+				
 			}
 			cestaEscritura.newLine();
 			cestaLectura.close();
