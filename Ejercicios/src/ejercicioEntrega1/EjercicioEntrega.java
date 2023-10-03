@@ -23,13 +23,36 @@ public class EjercicioEntrega {
 		
 			String frase = cestaLectura.readLine();
 		
-			while(frase != null) {
 			
-				cestaEscritura.write(frase);
-				cestaEscritura.newLine();
-				frase = cestaLectura.readLine();	
+			
+			int caracter = lector.read();
+			int cont = 0;
+			while(caracter != '\n') {
+				if (caracter < 0) {
+					String cadena = "";
+					while(caracter != ',') {
+						cadena = cadena + (char)caracter;
+						caracter = lector.read();
+					}
+					cont++;
+				
+					if (cont == 1) {
+						cestaEscritura.write("Nombre: "+ cadena);
+						cestaEscritura.newLine();
+					}else if (cont == 2) {
+						cestaEscritura.write("Apellidos: "+ cadena);
+						cestaEscritura.newLine();
+					}else if (cont == 3) {
+						cestaEscritura.write("Fecha Nacimiento "+ cadena);
+						cestaEscritura.newLine();
+					}else {
+						cestaEscritura.write("Teléfono: "+ cadena);
+						cestaEscritura.newLine();
+					}
+					caracter = lector.read();
+				}
 			}
-		
+			cestaEscritura.newLine();
 			cestaLectura.close();
 			cestaEscritura.close();
 		}catch (FileNotFoundException e) {
