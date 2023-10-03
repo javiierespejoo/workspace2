@@ -1,31 +1,25 @@
 Nombre: Jose María
 Apellidos: Terrer Navarro
-Altura: 1.87
 Fecha Nacimiento: 02/05/1998
 Teléfono: 654783433
 Nombre: Pilar
 Apellidos: Bayona Pérez
-Altura: 1.60
 Fecha Nacimiento: 20/02/1972
 Teléfono: 976585669
 Nombre: Ángel
 Apellidos: Piqueras Rodriguez
-Altura: 1.90
 Fecha Nacimiento: 25/09/2001
 Teléfono: 689887744
 Nombre: Pedro
 Apellidos: Duque Contreras
-Altura: 1.81
 Fecha Nacimiento: 26/11/1985
 Teléfono: 652369633
 Nombre: Maria Pilar
 Apellidos: García García
-Altura: 1.85
 Fecha Nacimiento: 30/11/2001
 Teléfono: 621350120
 Nombre: Josefa
 Apellidos: Bueno Vallés
-Altura: 1.73
 Fecha Nacimiento: 29/08/1974
 Teléfono: 976412141
 

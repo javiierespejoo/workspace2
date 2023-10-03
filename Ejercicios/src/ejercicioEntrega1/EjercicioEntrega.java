@@ -40,8 +40,7 @@ public class EjercicioEntrega {
 						cestaEscritura.write("Apellidos: "+ cadena);
 						cestaEscritura.newLine();
 					}else if (cont == 3) {
-						cestaEscritura.write("Altura: "+ cadena);
-						cestaEscritura.newLine();
+					
 					}else if(cont == 4){
 						cestaEscritura.write("Fecha Nacimiento: "+ cadena);
 						cestaEscritura.newLine();
