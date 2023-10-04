@@ -52,6 +52,12 @@ public class Ejercicio3 {
 	                cestaEscritura.newLine();
 	            }
 	           
+	            escritor.close();
+				cestaEscritura.close();
+				br.close();
+				is.close();
+				isr.close();
+				
 				
 				
 				
