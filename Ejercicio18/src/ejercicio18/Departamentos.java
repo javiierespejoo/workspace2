@@ -3,8 +3,8 @@ package ejercicio18;
 public class Departamentos {
 	
 	private int numero;
-	private String nombre; // 25 caracteres
-	private String localidad; // 50 caracteres
+	private String nombre; // 15 caracteres
+	private String localidad; // 15 caracteres
 	
 	public Departamentos(int numero, String nombre, String localidad) {
 		super();

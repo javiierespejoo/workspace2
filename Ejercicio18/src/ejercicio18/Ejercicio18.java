@@ -19,17 +19,17 @@ registro dentro del fichero y obtener sus datos.
 
 public class Ejercicio18 {
 
-	private static int tamagnoRegistro = 154; // int(4) + 25 char + 50 char = 4 + 50 + 100 = 154
+	private static int tamagnoRegistro = 64; // int(4) + 15 char + 15 char = 4 + 30 + 30 = 64
 	public static void main(String[] args) {
 		
 		ArrayList<Departamentos> listaDepartamentos = new ArrayList<>();
-		Departamentos d1 = new Departamentos(101, "Matematicas", "Zaragoza");
+		Departamentos d1 = new Departamentos(101, "Matematicas    ", "Zaragoza       ");
 		listaDepartamentos.add(d1);
-		Departamentos d2 = new Departamentos(98, "Fisica", "Zaragoza");
+		Departamentos d2 = new Departamentos(98, "Fisica         ", "Zaragoza       ");
 		listaDepartamentos.add(d2);
-		Departamentos d3 = new Departamentos(2, "Ingles", "Huesca");
+		Departamentos d3 = new Departamentos(2, "Ingles         ", "Huesca         ");
 		listaDepartamentos.add(d3);
-		Departamentos d4 = new Departamentos(213, "Fisica", "Teruel");
+		Departamentos d4 = new Departamentos(213, "Fisica         ", "Teruel         ");
 		listaDepartamentos.add(d4);
 		
 		// defino el fichero donde voy a escribir
