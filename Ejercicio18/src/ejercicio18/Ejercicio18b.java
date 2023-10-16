@@ -19,7 +19,7 @@ public class Ejercicio18b {
 			e.printStackTrace();
 		}
 		
-		mifichero.seek(funcion(213));
+		mifichero.seek(funcion(2));
 		System.out.println("El numero de departamento es: " + mifichero.readInt());
 		
 		System.out.println("El nombre del departamento es: " + obtenerString(mifichero, tamagnoNombre));
