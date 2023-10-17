@@ -3,6 +3,7 @@ package ejercicio19;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ejercicio19 {
@@ -11,6 +12,7 @@ public class Ejercicio19 {
 	private static int tamagnoNombre = 15;
 	private static int tamagnoLocalidad = 15;
 	public static void main(String[] args) throws IOException {
+		
 			
 			RandomAccessFile mifichero = null;
 			try {
@@ -22,9 +24,19 @@ public class Ejercicio19 {
 			}
 			System.out.println("Dime el numero del departamento que quieres modificar");
 			int num = teclado.nextInt();
+			teclado.nextLine();
 			
+			System.out.println("Los datos antigüos: ");
 			mostrarDepartamento(num, mifichero);
 			escribirDepartamento(num, mifichero);
+			System.out.println("Los nuevos datos: ");
+			mostrarDepartamento(num,mifichero);
+			
+			try {
+				mifichero.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			
 			
@@ -34,12 +46,13 @@ public class Ejercicio19 {
 		mifichero.seek(funcion(num));
 		System.out.println("El numero de departamento es: " + mifichero.readInt());
 		
-		System.out.println("El nombre viejo del departamento era: " + obtenerString(mifichero, tamagnoNombre));
+		System.out.println("El nombre del departamento es: " + obtenerString(mifichero, tamagnoNombre));
 		
-		System.out.println("La localidad vieja era: " + obtenerString(mifichero, tamagnoLocalidad));
+		System.out.println("La localidad es: " + obtenerString(mifichero, tamagnoLocalidad));
 	}
 	
 	private static void escribirDepartamento(int num, RandomAccessFile mifichero) throws IOException {
+		ArrayList<Departamentos> listaDepartamentos = new ArrayList<>();
 		mifichero.seek(funcion(num));
 		System.out.println("Dime su nuevo nombre");
 		String nombreNuevo = teclado.nextLine();
@@ -47,8 +60,7 @@ public class Ejercicio19 {
 		StringBuffer bNombre = new StringBuffer();
 		bNombre.append(nombreNuevo);
 		bNombre.setLength(tamagnoNombre);
-		new String (bNombre);
-		teclado.nextLine();
+		nombreNuevo = new String (bNombre);
 		
 		System.out.println("Dime su nueva localidad");
 		String localidadNueva = teclado.nextLine();
@@ -56,8 +68,15 @@ public class Ejercicio19 {
 		StringBuffer bLocalidad = new StringBuffer();
 		bLocalidad.append(localidadNueva);
 		bLocalidad.setLength(tamagnoLocalidad);
-		new String (bLocalidad);
+		localidadNueva = new String (bLocalidad);
 		
+		Departamentos d = new Departamentos(num, nombreNuevo, localidadNueva);
+		listaDepartamentos.add(d);
+		
+		//Al no modificar el numero de departamento, me salto los 4 bits destinados al numero y empiezo a escribir detras del numero
+		mifichero.seek(funcion(num)+4);  
+		mifichero.writeChars(nombreNuevo);
+		mifichero.writeChars(localidadNueva);
 		
 		
 	}
