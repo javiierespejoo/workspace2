@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Nominas><empleado><dni>012345678a</dni><sueldo><base>1500</base><complementos>100</complementos><irpf>19.0</irpf><total>1296.0</total></sueldo></empleado><empleado><dni>098765432b</dni><sueldo><base>1300</base><complementos>300</complementos><irpf>20.0</irpf><total>1280.0</total></sueldo></empleado></Nominas>
