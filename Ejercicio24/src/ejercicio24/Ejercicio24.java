@@ -82,7 +82,7 @@ public class Ejercicio24 {
 	}
 	
 	public static void escribirNominas() {
-DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
+		DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
 		
 		try {
 			DocumentBuilder builder = factoria.newDocumentBuilder();
