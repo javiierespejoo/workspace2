@@ -34,125 +34,103 @@ public class AccesoSQLite {
 				System.out.println("7.- Listar los socios con libros que han superado la fecha de prestamo");
 				opcion = teclado.nextInt();
 				
+				ResultSet resultado;
+				ResultSetMetaData rsmd;
+				int cont = 0;
+				
 				switch(opcion) {
 				case 1:
-					ResultSet resultado = stm.executeQuery("SELECT * FROM LIBRO");
-					ResultSetMetaData rsmd = resultado.getMetaData();
-					
-					int numColumnas = rsmd.getColumnCount();
-					System.out.println("Se han devuelto " + numColumnas + " columnas");
-					
-					System.out.println("Todos los datos de la tabla: " + rsmd.getCatalogName(1));
-					while(resultado.next()) {
-						for (int i = 1; i <= numColumnas; i++) {
-							if (rsmd.getColumnType(i) == Types.INTEGER) {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getInt(i));
-							}else {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getString(i));
-							}
-						
-						}
-						System.out.println("---------------------------------");
-					}
-					
+					resultado = stm.executeQuery("SELECT * FROM LIBRO");
+					mostrarTablaEntera(resultado);
 					resultado.close();
 				break;
 				case 2:
 					resultado = stm.executeQuery("SELECT * FROM SOCIO");
-					rsmd = resultado.getMetaData();
-					
-					numColumnas = rsmd.getColumnCount();
-					System.out.println("Se han devuelto " + numColumnas + " columnas");
-					
-					System.out.println("Todos los datos de la tabla: " + rsmd.getCatalogName(1));
-					while(resultado.next()) {
-						for (int i = 1; i <= numColumnas; i++) {
-							if (rsmd.getColumnType(i) == Types.INTEGER) {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getInt(i));
-							}else {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getString(i));
-							}
-						
-						}
-						System.out.println("---------------------------------");
-					}
-					
+					mostrarTablaEntera(resultado);
 					resultado.close();
 				break;
 				case 3:
 					resultado = stm.executeQuery("SELECT * FROM PRESTAMO");
-					rsmd = resultado.getMetaData();
-					
-					numColumnas = rsmd.getColumnCount();
-					System.out.println("Se han devuelto " + numColumnas + " columnas");
-					
-					System.out.println("Todos los datos de la tabla: " + rsmd.getCatalogName(1));
-					while(resultado.next()) {
-						for (int i = 1; i <= numColumnas; i++) {
-							if (rsmd.getColumnType(i) == Types.INTEGER) {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getInt(i));
-							}else {
-								System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getString(i));
-							}
-						
-						}
-						System.out.println("---------------------------------");
-					}
-					
+					mostrarTablaEntera(resultado);
 					resultado.close();
 				break;
 				case 4:
 					resultado = stm.executeQuery("SELECT Titulo, FechaIniPrestamo, FechaFinPrestamo FROM  PRESTAMO JOIN LIBRO ON CodLibro = Codigo WHERE FechaIniPrestamo <= date() AND FechaFinPrestamo > date()");
 					
 					System.out.println("Libros prestados actualmente:\n");
+					
 					while(resultado.next()) {
-						
+							
 						String titulo = resultado.getString("Titulo");
 						String fechai = resultado.getString("FechaIniPrestamo");
 						String fechaf = resultado.getString("FechaFinPrestamo");
-						
+							
 						System.out.println("Titulo: " + titulo);
 						System.out.println("Fecha inicio de prestamo: " + fechai);
 						System.out.println("Fecha fin de prestamo: " + fechaf);
 						System.out.println("");
-						
+						cont++;	
+						}
+					
+					if (cont == 0) {
+						System.out.println("Actualmente no hay libros prestados\n");
 					}
+					
 					resultado.close();
 				break;
 				case 5:
+					resultado = stm.executeQuery("SELECT * FROM SOCIO");
+					mostrarTablaEntera(resultado);
+					resultado.close();
 					System.out.println("Dime un numero de socio: ");
 					int socio = teclado.nextInt();
 					
-					resultado = stm.executeQuery("SELECT Nombre, Apellidos, count(CodSocio) AS NumLibros FROM PRESTAMO JOIN SOCIO ON CodSocio = Codigo WHERE CodSocio = "+ socio +" AND FechaFinPrestamo > date()");
+					resultado = stm.executeQuery("SELECT Nombre, Apellidos, count(CodSocio) AS NumLibros FROM PRESTAMO JOIN SOCIO ON CodSocio = Codigo WHERE CodSocio = " + socio + " AND FechaFinPrestamo > date()");
+					
 					while(resultado.next()) {
-						String nombre = resultado.getString("Nombre");
-						String apellidos = resultado.getString("Apellidos");
 						int nLibros = resultado.getInt(3);
-						System.out.println("Libros prestados al socio con codigo = "+ socio +": ");
-						System.out.println("Nombre: " + nombre);
-						System.out.println("Apellidos: " + apellidos);
-						System.out.println("Numero de libros prestados: " + nLibros);
+						if (nLibros == 0) {
+							System.out.println("El socio con codigo = " + socio + " no tiene libros prestados actualmente\n");
+						} else {
+							String nombre = resultado.getString("Nombre");
+							String apellidos = resultado.getString("Apellidos");
+							
+							System.out.println("Libros prestados al socio con codigo = "+ socio +": ");
+							System.out.println("Nombre: " + nombre);
+							System.out.println("Apellidos: " + apellidos);
+							System.out.println("Numero de libros prestados: " + nLibros);
+						}
+						
 					}
+					
 					resultado.close();
 				break;
 				case 6:
 					resultado = stm.executeQuery("SELECT Titulo, FechaIniPrestamo, FechaFinPrestamo FROM PRESTAMO JOIN LIBRO ON CodLibro = Codigo WHERE FechaFinPrestamo < date()");
 					System.out.println("Libros que han superado la fecha de prestamo:\n");
+					
 					while(resultado.next()) {
 						String titulo = resultado.getString("Titulo");
 						String fechai = resultado.getString("FechaIniPrestamo");
 						String fechaf = resultado.getString("FechaFinPrestamo");
-						
+							
 						System.out.println("Titulo: " + titulo);
 						System.out.println("Fecha inicio de prestamo: " + fechai);
 						System.out.println("fecha fin de prestamo: " + fechaf);
 						System.out.println("");
+						cont++;
 					}
+					
+					if (cont == 0) {
+						System.out.println("De momento no hay ningun libro que haya superado la fecha de prestamo\n");
+					}
+						
 					resultado.close();
 				break;
 				case 7:
 					resultado = stm.executeQuery("SELECT DISTINCT CodSocio, Nombre, Apellidos FROM PRESTAMO JOIN SOCIO ON CodSocio = Codigo WHERE FechaFinPrestamo < date()");
 					System.out.println("Socios con libros que han superado la fecha final de prestamo:\n");
+					
 					while(resultado.next()) {
 						String codSocio = resultado.getString("CodSocio");
 						String nombre = resultado.getString("Nombre");
@@ -161,7 +139,13 @@ public class AccesoSQLite {
 						System.out.println("Nombre: "+ nombre);
 						System.out.println("Apellidos: " + apellidos);
 						System.out.println("");
+						cont++;
 					}
+					
+					if (cont == 0) {
+						System.out.println("No hay ningun socio que tenga libros que superen la fecha de prestamo\n");
+					}
+						
 					resultado.close();
 				break;
 				case 0:
@@ -191,6 +175,31 @@ public class AccesoSQLite {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * @param resultado
+	 * @throws SQLException
+	 */
+	private static void mostrarTablaEntera(ResultSet resultado) throws SQLException {
+		ResultSetMetaData rsmd;
+		rsmd = resultado.getMetaData();
+		
+		int numColumnas = rsmd.getColumnCount();
+		System.out.println("Se han devuelto " + numColumnas + " columnas");
+		
+		System.out.println("Todos los datos de la tabla: " + rsmd.getCatalogName(1));
+		while(resultado.next()) {
+			for (int i = 1; i <= numColumnas; i++) {
+				if (rsmd.getColumnType(i) == Types.INTEGER) {
+					System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getInt(i));
+				}else {
+					System.out.println(rsmd.getColumnLabel(i) + ": " + resultado.getString(i));
+				}
+			
+			}
+			System.out.println("---------------------------------");
+		}
 	}
 
 }
