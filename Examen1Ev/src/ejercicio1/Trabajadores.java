@@ -17,6 +17,10 @@ public class Trabajadores {
 		this.salario = salario;
 		this.id_sindicato = id_sindicato;
 	}
+	
+	public Trabajadores(int i) {
+		this.id = i;
+	}
 
 	public int getId() {
 		return id;

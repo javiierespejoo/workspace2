@@ -1,0 +1,11 @@
+id,nombre,salario,sindicato_id
+1,Luisa Fernández,50000.00,1
+2,Ahmed Khan,60000.00,2
+3,Elena Rodríguez,55000.00,1
+14,Ravi Patel,58000.00,3
+5,Sofía Kim,52000.00,2
+16,Jamal Al-Farsi,63000.00,1
+7,Mia Gupta,54000.00,3
+18,Diego Silva,59000.00,2
+9,Aisha Abubakar,56000.00,1
+10,Javier Morales,61000.00,3

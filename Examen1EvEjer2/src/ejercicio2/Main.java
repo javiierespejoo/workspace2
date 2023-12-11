@@ -21,7 +21,7 @@ public class Main {
 			
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://192.168.56.102/sindicatos", "javier", "Pass!123456");
 			
-			System.out.println("Estos son todos los socios de la biblioteca:\n");
+			System.out.println("Estos son todos las negociaciones colectivas:\n");
 			Statement stm = (Statement) conexion.createStatement();
 			ResultSet resultado = stm.executeQuery("SELECT * FROM NegociacionesColectivas");
 			mostrarTablaEntera(resultado);
@@ -33,7 +33,7 @@ public class Main {
 			while(op != 0) {
 				System.out.println("Que quieres hacer: ");
 				System.out.println("1.- Modificar una negociación colectiva");
-				System.out.println("2.- Mostrar los socios que hay en una negociacion sin acuerdo alcanzado");
+				System.out.println("2.- Mostrar los trabajadores que hay en una negociacion sin acuerdo alcanzado");
 				System.out.println("0.- Salir");
 				while(true) {
 					try {
@@ -50,7 +50,7 @@ public class Main {
 					modificarNegociacion(teclado, conexion, stm);
 				break;
 				case 2:
-					System.out.println("Estos son todos los socios de la biblioteca:\n");
+					System.out.println("Dime la id de la negociacion colectiva de la cual quieras ver a los trabajadores asociados");
 					String cod;
 					int id;
 					while(true) {
@@ -64,7 +64,8 @@ public class Main {
 						}
 
 					}
-					resultado = stm.executeQuery("SELECT * FROM Trabajadores JOIN NegociacionesColectivas ON Trabajadores.sindicato_id = NegociacionesColectivas.sindicato_id WHERE NegociacionesColectivas.id = " + id);
+					System.out.println("Estos son todos los trabajadores que hay en la negociacion con id = " + id + "\n");
+					resultado = stm.executeQuery("SELECT nombre FROM Trabajadores JOIN NegociacionesColectivas ON Trabajadores.sindicato_id = NegociacionesColectivas.sindicato_id WHERE NegociacionesColectivas.id = " + id);
 					mostrarTablaEntera(resultado);
 					resultado.close();
 				break;
@@ -108,7 +109,7 @@ public class Main {
 	}
 	
 	private static void modificarNegociacion(Scanner teclado, Connection conexion, Statement stm) throws SQLException {
-		String sql = "UPDATE `NegociacionColectiva` SET `fecha_fin`= ?,`resultado`= ? WHERE id = ?";
+		String sql = "UPDATE `NegociacionesColectivas` SET `fecha_fin`= ?,`resultado`= ? WHERE id = ?";
 		PreparedStatement pstm = conexion.prepareStatement(sql);
 		
 		boolean existe = false;
@@ -129,7 +130,7 @@ public class Main {
 
 			}
 			
-			ResultSet existeNegociacion = stm.executeQuery("SELECT id FROM NegociacionColectiva WHERE id = " + id);
+			ResultSet existeNegociacion = stm.executeQuery("SELECT id FROM NegociacionesColectivas WHERE id = " + id);
 			if(!existeNegociacion.next()) {
 			System.out.println("La negociacion introducida no existe");
 			} else {

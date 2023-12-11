@@ -11,7 +11,7 @@ public class LeeTodo {
 	public static void main(String[] args) throws IOException {
 		RandomAccessFile ficheroAleatorio = null;
 		try {
-			ficheroAleatorio = new RandomAccessFile("src\\ejercicio1\\Trabajadores.dat", "rw");
+			ficheroAleatorio = new RandomAccessFile("src\\ejercicio1\\TrabajadoresSplit.dat", "rw");
 		} catch (FileNotFoundException e) {
 
 			System.err.println("No existe el fichero");
