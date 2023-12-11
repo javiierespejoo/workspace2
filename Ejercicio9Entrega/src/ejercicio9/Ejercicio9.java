@@ -34,6 +34,18 @@ public class Ejercicio9 {
 			int op = Integer.parseInt(opcion);
 			
 			while(op != 0) {
+				System.out.println("¿Que quieres hacer?");
+				System.out.println("1.- Modificar un empleado");
+				System.out.println("0.- Salir");
+				while(true) {
+					try {
+						opcion = teclado.nextLine();
+						op = Integer.parseInt(opcion);
+						break;
+					} catch (NumberFormatException e) {
+						System.err.println("Error: Debes introducir un numero entero");
+					}
+				}
 				
 				switch(op) {
 				case 1:
@@ -42,24 +54,12 @@ public class Ejercicio9 {
 				case 0:
 					stm.close();
 					System.out.println("Ha seleccionado salir del programa");
-				break;
+					break;
 				default:
-					
-					System.out.println("¿Que quieres hacer?");
-					System.out.println("1.- Modificar un empleado");
-					System.out.println("0.- Salir");
-					while(true) {
-						try {
-							opcion = teclado.nextLine();
-							op = Integer.parseInt(opcion);
-							break;
-						} catch (NumberFormatException e) {
-							System.err.println("Error: Debes introducir un numero entero");
-						}
 
-					}
 				break;
 				}
+				
 			}
 			
 		} catch (ClassNotFoundException e) {
