@@ -23,3 +23,28 @@ Apellidos: Bueno Vallés
 Fecha Nacimiento: 29/08/1974
 Teléfono: 976412141
 
+Nombre: Jose María
+Apellidos: Terrer Navarro
+Fecha Nacimiento: 02/05/1998
+Teléfono: 654783433
+Nombre: Pilar
+Apellidos: Bayona Pérez
+Fecha Nacimiento: 20/02/1972
+Teléfono: 976585669
+Nombre: Ángel
+Apellidos: Piqueras Rodriguez
+Fecha Nacimiento: 25/09/2001
+Teléfono: 689887744
+Nombre: Pedro
+Apellidos: Duque Contreras
+Fecha Nacimiento: 26/11/1985
+Teléfono: 652369633
+Nombre: Maria Pilar
+Apellidos: García García
+Fecha Nacimiento: 30/11/2001
+Teléfono: 621350120
+Nombre: Josefa
+Apellidos: Bueno Vallés
+Fecha Nacimiento: 29/08/1974
+Teléfono: 976412141
+
