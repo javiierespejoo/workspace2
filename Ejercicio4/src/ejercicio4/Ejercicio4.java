@@ -11,7 +11,16 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Ejercicio4 {
-
+/**
+ * Este es el ejercicio 4 del tema 1:
+ * Escribe un programa Java que pida una serie de frases por teclado hasta que se inserte como
+frase la palabra “fin”. Dichas frases deberán guardarse en un fichero de texto. A continuación,
+el programa visualizará el contenido del fichero, frase por frase. Cada vez que se ejecute el
+programa, se tienen que descartar las frases que ya estaban escritas en el fichero. Realiza este
+ejercicio sin usar la clase BufferedReader.
+ * @param args
+ * @throws IOException
+ */
 	public static void main(String[] args) throws IOException {
 		
 		Ejercicio4 ej4 = new Ejercicio4();

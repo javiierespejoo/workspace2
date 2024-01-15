@@ -15,7 +15,15 @@ import java.util.Scanner;
 
 
 public class Ejercicio9 {
-
+/**
+ * Este es el ejercicio 9 de mysql de entrega:
+ * Realiza un programa Java que utilice el driver o conector JDBC con la base de datos biblioteca,
+creada en SQLite o MySQL, y que modifique un socio existente de la tabla SOCIO. Los datos
+del socio a modificar son el domicilio y el teléfono y se introducirán por teclado. En el caso de
+que el socio a modificar no exista en la tabla SOCIO, se deberá mostrar un mensaje por
+pantalla
+ * @param args
+ */
 	public static void main(String[] args) {
 		Scanner teclado = new Scanner(System.in);
 		try {

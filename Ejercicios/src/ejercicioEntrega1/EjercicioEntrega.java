@@ -9,7 +9,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class EjercicioEntrega {
-
+/**
+ * Este es el primer ejercicio de entrega del primer trimestre:
+ * Escribe un programa en Java que lea el fichero datos.txt y los guarde en otro fichero llamado 
+ * @param args
+ * @throws IOException
+ */
 	public static void main(String[] args) throws IOException {
 		
 		File mifichero = new File("datos.txt");

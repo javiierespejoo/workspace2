@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 11 ene 2024 12:21:02 by Hibernate Tools 6.0.2.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="Ventas" name="datos.Producto" optimistic-lock="none" table="producto">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="descripcion" type="string">
+            <column length="50" name="descripcion"/>
+        </property>
+        <property name="stockactual" type="java.lang.Integer">
+            <column name="stockactual"/>
+        </property>
+        <property name="stockminimo" type="java.lang.Integer">
+            <column name="stockminimo"/>
+        </property>
+        <property name="precio" type="java.lang.Float">
+            <column name="precio" precision="12" scale="0"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="ventas" table="venta">
+            <key>
+                <column name="id_producto" not-null="true"/>
+            </key>
+            <one-to-many class="datos.Venta"/>
+        </set>
+    </class>
+</hibernate-mapping>
