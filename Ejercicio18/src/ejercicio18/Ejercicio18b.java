@@ -22,9 +22,9 @@ public class Ejercicio18b {
 		mifichero.seek(funcion(2));
 		System.out.println("El numero de departamento es: " + mifichero.readInt());
 		
-		System.out.println("El nombre del departamento es: " + obtenerString(mifichero, tamagnoNombre));
+		System.out.println("El nombre del departamento es: " + obtenerString(mifichero, tamagnoNombre).trim());
 		
-		System.out.println("La localidad es: " + obtenerString(mifichero, tamagnoLocalidad));
+		System.out.println("La localidad es: " + obtenerString(mifichero, tamagnoLocalidad).trim());
 		
 	}
 	

@@ -11,7 +11,7 @@ import java.io.IOException;
 public class EjercicioEntrega {
 /**
  * Este es el primer ejercicio de entrega del primer trimestre:
- * Escribe un programa en Java que lea el fichero datos.txt y los guarde en otro fichero llamado 
+ * Escribe un programa en Java que lea el fichero datos.txt y los guarde en otro fichero llamado tarjetas.txt
  * @param args
  * @throws IOException
  */

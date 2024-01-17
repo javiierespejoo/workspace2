@@ -2,9 +2,11 @@ package ejercicio15;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,10 +40,30 @@ antigüedad.
 			switch(opcion) {
 			case 1 :
 				System.out.println("Dime su nombre");
+				teclado.nextLine();
 				String nombre = teclado.nextLine();
 				
+				System.out.println("Dime su sueldo");
+				int sueldo = teclado.nextInt();
+				
+				System.out.println("Dime su año de nacimiento");
+				int anoNacimiento = teclado.nextInt();
+				
+				System.out.println("Dime su antiguedad");
+				int antiguedad = teclado.nextInt();
+				
+				Empleados e = new Empleados(nombre, sueldo, anoNacimiento, antiguedad);
+				listaEmpleados.add(e);
+				os.writeObject(e);
+				
+			break;
+			case 2:
+				escritorBinario.close();
+				os.close();
+				System.out.println("Se ha finalizado la ejecucion");
 			break;
 			}
+			
 		}
 	}
 
