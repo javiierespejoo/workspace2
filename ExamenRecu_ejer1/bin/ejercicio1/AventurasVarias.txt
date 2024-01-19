@@ -1,0 +1,8 @@
+Luis;Hernández;665544333;Avda. de los Pinos, 7;luis.hernandez@gmail.com;VIP;Español
+Sophie;Leclair;667788999;C/Cervantes, 15 Bajo Izquierda;sophie.leclair@gmail.com;VIP;Francés
+Raj;Patel;664433222;Paseo del Sol, 42;raj.patel@gmail.com;;Indio
+Elena;Sanchez;669911000;C/Alameda, 18;elena.sanchez@hotmail.com;;Española
+Kenji;Tanaka;661122333;Avda. de las Rosas, 88;kenji.tanaka@gmail.com;VIP;Japonés
+Chiara;Rossi;578934567;C/Alfonso X, 5, 2ºB;chiara.rossi@hotmail.com;;Italiana
+Mateo;Gómez;645678987;Plaza Mayor, 3;mateo.gomez@gmail.com;;Argentino
+Sofia;Martinez;601234567;C/Gran Vía, 55;sofia.martinez@gmail.com;VIP;Mexicana
