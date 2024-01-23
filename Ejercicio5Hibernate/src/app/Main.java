@@ -1,89 +1,70 @@
 package app;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import controlador.HibernateUtil;
+import datos.Cliente;
+import datos.Producto;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		/*
-		 * Realiza un programa Java que utilice Hibernate para ejecutar las siguientes
-		 * operaciones de gestión de objetos mapeados a partir de la base de datos
-		 * personal:
-		 * 
-		 * En cada apartado, añade las comprobaciones necesarias en caso de errores,
-		 * visualiza en pantalla los mensajes apropiados para todas las situaciones y
-		 * también los atributos de los objetos manipulados en Java.
-		 * 
-		 */
-		// ------------------UTILIZAMOS LO DEFINIDO ANTES-------------
-		// obtener la f�brica de la conexi�n actual para crear una sesi�n
 		SessionFactory fabrica = HibernateUtil.getSessionFactory();
-		// ------------------------------------------------------------
-		// creamos la sesi�n
-		Session sesion = fabrica.openSession();
-		// creamos la transacci�n de la sesi�n
-		
 
-		boolean continuar = true;
+		Session sesion = fabrica.openSession();
+
+		boolean salir = false;
 		int opcion;
-		while (continuar) {
+		while (!salir) {
 			menu();
-			opcion = Utilidades.pedirEntero("Elija una opcion: ");
+			opcion = Utilidades.pedirEntero("Seleccione una opcion: ");
 			if (opcion > 0 && opcion < 4) {
 				switch (opcion) {
 					case 1:
-						System.out.println("1. Modificar el precio de los productos.(Incluye IVA)");
-						System.out.println("------------------------------");
-						GestionHib.modificarPrecio(sesion);
+						modificarPrecio(sesion);
 						break;
 					case 2:
-						System.out.println("2. Eliminar las ventas.");
-						System.out.println("------------------------------");
-						GestionHib.eliminarVentas(sesion);
+						vaciarVentas(sesion);
 						break;
-					case 3:
-						System.out.println("3. Salir");
-						System.out.println("-----------");
-						continuar = false;
+					case 0:
+						salir = true;
 						sesion.close();
 						fabrica.close();
 						break;
 
 				}
 			} else
-				System.out.println("EL numero introducido tiene que ser entre el 1 y el 3");
+				System.out.println("EL numero tiene que estar comprendido entre 1 y 3");
 		}
 	}
 
 	public static void menu() {
 		System.out.println("Elige una opcion: ");
 			System.out.println("0.- Salir.");
-			System.out.println("1.- Modificar el precio de todos los productos para que incluyan el 21% de IVA.");
-			System.out.println("2.- Eliminar las ventas realizadas por un cliente a elegir");
+			System.out.println("1.- Modificar el precio de los productos (añadir el IVA).");
+			System.out.println("2.- Vaciar las ventas de un cliente.");
 	}
 	
 	public static void modificarPrecio(Session sesion) {
-		// Modificar el precio de todos los productos de forma que incluyan un IVA del
-		// 21%.
+
 		Transaction tx = sesion.beginTransaction();
 		try {
-			// Consulta para obtener todos los productos
-			Query<Producto> query = sesion.createQuery("FROM Producto", Producto.class);
-			List<Producto> productos = query.list();
 
-			// Modificar el precio de cada producto aplicando un IVA del 21%
-			for (Producto producto : productos) {
-				float nuevoPrecio = (float) (producto.getPrecio() * 1.21);
-				producto.setPrecio(nuevoPrecio);
-				sesion.update(producto);
+			Query<Producto> qProductos = sesion.createQuery("FROM Producto", Producto.class);
+			List<Producto> listaProductos = qProductos.list();
+
+			for (Producto p : listaProductos) {
+				float nuevoPrecio = (float) (p.getPrecio() * 1.21);
+				p.setPrecio(nuevoPrecio);
+				sesion.update(p);
 			}
 
-			Utilidades.mostrarEnPantalla("Precios modificados con IVA del 21%.");
+			Utilidades.mostrarEnPantalla("Se han modificado los precios.");
 			tx.commit();
 		} catch (Exception e) {
 			Utilidades.mostrarEnPantalla("Error al modificar los precios: " + e.getMessage());
@@ -92,39 +73,34 @@ public class Main {
 		
 	}
 
-	public static void eliminarVentas(Session sesion) {
-		// Eliminar las ventas realizadas por el cliente que el usuario elija
-		// (para que el usuario sepa qué cliente elegir, la aplicación deberá mostrar el
-		// nombre y el id del cliente antes)
+	public static void vaciarVentas(Session sesion) {
+
 		Transaction tx = sesion.beginTransaction();
 		try {
 			
-			// Consulta para obtener todos los clientes
-			Query<Cliente> queryClientes = sesion.createQuery("Select cliente FROM Venta ", Cliente.class);
-			List<Cliente> clientes = queryClientes.list();
 
-			// Mostrar la lista de clientes al usuario
+			Query<Cliente> qClientes = sesion.createQuery("Select cliente FROM Venta ", Cliente.class);
+			List<Cliente> listaClientes = qClientes.list();
+
 			Utilidades.mostrarEnPantalla("Lista de clientes:");
-			for (Cliente cliente : clientes) {
-				Utilidades.mostrarEnPantalla("ID: " + cliente.getId() + ", Nombre: " + cliente.getNombre());
+			for (Cliente c : listaClientes) {
+				Utilidades.mostrarEnPantalla("Nombre: " + c.getNombre() + " con id: " + c.getId());
 			}
 
-			// Solicitar al usuario que elija un cliente por ID
-			int idCliente = Utilidades.pedirEntero("Introduce el ID del cliente cuyas ventas deseas eliminar:");
+			int idCliente = Utilidades.pedirEntero("Dime el cliente al que le quieres vaciar las ventas: ");
 
-			// Consulta para eliminar las ventas del cliente seleccionado
-			Query<?> queryEliminarVentas = sesion.createQuery("DELETE FROM Venta WHERE cliente.id = :idCliente");
-			queryEliminarVentas.setParameter("idCliente", idCliente);
-			int filasAfectadas = queryEliminarVentas.executeUpdate();
+			Query<?> qVaciarVentas = sesion.createQuery("DELETE FROM Venta WHERE cliente.id = :idCliente");
+			qVaciarVentas.setParameter("idCliente", idCliente);
+			int filas = qVaciarVentas.executeUpdate();
 
-			if (filasAfectadas > 0) {
-				Utilidades.mostrarEnPantalla("Ventas del cliente eliminadas correctamente.");
+			if (filas > 0) {
+				Utilidades.mostrarEnPantalla("Las ventas del cliente con id: " + idCliente + " han sido vaciadas.");
 			} else {
-				Utilidades.mostrarEnPantalla("No se encontraron ventas para el cliente con ID: " + idCliente);
+				Utilidades.mostrarEnPantalla("El cliente con id: " + idCliente + " no tiene ventas.");
 			}
 			tx.commit();
 		} catch (Exception e) {
-			Utilidades.mostrarEnPantalla("Error al eliminar las ventas: " + e.getMessage());
+			Utilidades.mostrarEnPantalla("Error al vaciar las ventas: " + e.getMessage());
 			tx.rollback();
 		}
 	}
