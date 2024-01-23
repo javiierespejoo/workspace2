@@ -1,145 +1,137 @@
 package app;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import javax.management.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import controlador.HibernateUtil;
-import datos.Departamento;
-import datos.Empleado;
 
+import datos.Cliente;
+import datos.Producto;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Scanner teclado = new Scanner(System.in);
-		SessionFactory fabrica;
-		Session sesion;
-		Transaction tx;
+		// TODO Auto-generated method stub
+		/*
+		 * Realiza un programa Java que utilice Hibernate para ejecutar las siguientes
+		 * operaciones de gestión de objetos mapeados a partir de la base de datos
+		 * personal:
+		 * 
+		 * En cada apartado, añade las comprobaciones necesarias en caso de errores,
+		 * visualiza en pantalla los mensajes apropiados para todas las situaciones y
+		 * también los atributos de los objetos manipulados en Java.
+		 * 
+		 */
+		// ------------------UTILIZAMOS LO DEFINIDO ANTES-------------
+		// obtener la f�brica de la conexi�n actual para crear una sesi�n
+		SessionFactory fabrica = HibernateUtil.getSessionFactory();
+		// ------------------------------------------------------------
+		// creamos la sesi�n
+		Session sesion = fabrica.openSession();
+		// creamos la transacci�n de la sesi�n
 		
-		String opcion = "5";
-		int op = Integer.parseInt(opcion);
-		
-		while(op != 0) {
-			System.out.println("Elige una opcion del menu:");
-			System.out.println("1.- Modificar un departamento");
-			System.out.println("2.- Insertar un departamento");
-			System.out.println("3.- Leer un empleado y su departamento");
-			System.out.println("4.- Eliminar un empleado");
-			System.out.println("5.- Eliminar un departamento");
-			System.out.println("0.- Salir");
-			while(true) {
-				try {
-					opcion = teclado.nextLine();
-					op = Integer.parseInt(opcion);
-					break;
-				} catch (NumberFormatException e) {
-					System.err.println("Error: Debes introducir un numero entero");
-				}
-			}
-			
-			switch(op) {
-			case 1:
-				fabrica = HibernateUtil.getSessionFactory();
-				
-				sesion = fabrica.openSession();	
-				
-				tx = sesion.beginTransaction();
-				
-				System.out.println("Estos son los departamentos");
-				Query<Departamento> q = sesion.createQuery("from Departamento");
-				List <Departamento> lista = q.list();
-				Iterator <Departamento> iter = lista.iterator();
-				
-				System.out.println("Numero de registros:"  + lista.size());
-				while (iter.hasNext())
-				{
-				   
-					Departamento dep = (Departamento) iter.next(); 
-					System.out.println("ID departamento = " + dep.getIdDep() + " Nombre =" + dep.getNombre());		   
-				}
-				try {
-					String num;
-					int numDep;
-				System.out.println("Que departamento quieres modificar: ");
-				while(true) {
-					try {
-						num = teclado.nextLine();
-						numDep = Integer.parseInt(opcion);
-						break;
-					} catch (NumberFormatException e) {
-						System.err.println("Error: Debes introducir un numero entero");
-					}
-				}
-				
-				
-					Departamento dep = (Departamento)sesion.get(Departamento.class, numDep);
-					System.out.println("Dime su nuevo nombre");
-					String nombre = teclado.nextLine();
-					dep.setNombre(nombre);
-					
-					System.out.println("Dime su nueva localidad");
-					String localidad = teclado.nextLine();
-					dep.setLocalidad(localidad);
-					
-					sesion.update(dep);
-					tx.commit();
-				}catch(IllegalArgumentException e) {
-					e.printStackTrace();
-					tx.rollback();
-				} finally {
-					sesion.close();
-					fabrica.close();
-				}
-			break;
-			case 2:
-				fabrica = HibernateUtil.getSessionFactory();
-				
-				sesion = fabrica.openSession();	
-				
-				tx = sesion.beginTransaction();
-				try {
-					Departamento dep = new Departamento();
-					System.out.println("Dime el ID del departamento");
-					Byte id = teclado.nextByte();
-					dep.setIdDep(id);
-					
-					System.out.println("Dime su nuevo nombre");
-					String nombre = teclado.nextLine();
-					dep.setNombre(nombre);
-					
-					System.out.println("Dime su nueva localidad");
-					String localidad = teclado.nextLine();
-					dep.setLocalidad(localidad);
-					Set e = null;
-					dep.setEmpleados(e);
-					
-					dep = new Departamento(id, nombre, localidad, e);
-					sesion.saveOrUpdate(dep);
-					
-					tx.commit();
-				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
-					tx.rollback();
-				} finally {
-					sesion.close();
-					fabrica.close();
-				}
-				
-			break;
-			case 3:
-				
-			break;
-			}
-		}
 
+		boolean continuar = true;
+		int opcion;
+		while (continuar) {
+			menu();
+			opcion = Utilidades.pedirEntero("Elija una opcion: ");
+			if (opcion > 0 && opcion < 4) {
+				switch (opcion) {
+					case 1:
+						System.out.println("1. Modificar el precio de los productos.(Incluye IVA)");
+						System.out.println("------------------------------");
+						modificarPrecio(sesion);
+						break;
+					case 2:
+						System.out.println("2. Eliminar las ventas.");
+						System.out.println("------------------------------");
+						eliminarVentas(sesion);
+						break;
+					case 3:
+						System.out.println("3. Salir");
+						System.out.println("-----------");
+						continuar = false;
+						sesion.close();
+						fabrica.close();
+						break;
+
+				}
+			} else
+				System.out.println("EL numero introducido tiene que ser entre el 1 y el 3");
+		}
 	}
 
+	public static void menu() {
+		System.out.println("Que es lo que quieres hacer?");
+		System.out.println("__________________________________");
+		System.out.println("1. Modificar el precio de los productos.(Incluye IVA)");
+		System.out.println("2. Eliminar las ventas.");
+		System.out.println("3. Salir");
+	}
+	
+	public static void modificarPrecio(Session sesion) {
+		// Modificar el precio de todos los productos de forma que incluyan un IVA del
+		// 21%.
+		Transaction tx = sesion.beginTransaction();
+		try {
+			// Consulta para obtener todos los productos
+			Query<Producto> query = sesion.createQuery("FROM Producto", Producto.class);
+			List<Producto> productos = query.list();
+
+			// Modificar el precio de cada producto aplicando un IVA del 21%
+			for (Producto producto : productos) {
+				float nuevoPrecio = (float) (producto.getPrecio() * 1.21);
+				producto.setPrecio(nuevoPrecio);
+				sesion.update(producto);
+			}
+
+			Utilidades.mostrarEnPantalla("Precios modificados con IVA del 21%.");
+			tx.commit();
+		} catch (Exception e) {
+			Utilidades.mostrarEnPantalla("Error al modificar los precios: " + e.getMessage());
+			tx.rollback();
+		}
+		
+	}
+	
+	public static void eliminarVentas(Session sesion) {
+		// Eliminar las ventas realizadas por el cliente que el usuario elija
+		// (para que el usuario sepa qué cliente elegir, la aplicación deberá mostrar el
+		// nombre y el id del cliente antes)
+		Transaction tx = sesion.beginTransaction();
+		try {
+			
+			// Consulta para obtener todos los clientes
+			Query<Cliente> queryClientes = sesion.createQuery("Select cliente FROM Venta ", Cliente.class);
+			List<Cliente> clientes = queryClientes.list();
+
+			// Mostrar la lista de clientes al usuario
+			Utilidades.mostrarEnPantalla("Lista de clientes:");
+			for (Cliente cliente : clientes) {
+				Utilidades.mostrarEnPantalla("ID: " + cliente.getId() + ", Nombre: " + cliente.getNombre());
+			}
+
+			// Solicitar al usuario que elija un cliente por ID
+			int idCliente = Utilidades.pedirEntero("Introduce el ID del cliente cuyas ventas deseas eliminar:");
+
+			// Consulta para eliminar las ventas del cliente seleccionado
+			Query<?> queryEliminarVentas = sesion.createQuery("DELETE FROM Venta WHERE cliente.id = :idCliente");
+			queryEliminarVentas.setParameter("idCliente", idCliente);
+			int filasAfectadas = queryEliminarVentas.executeUpdate();
+
+			if (filasAfectadas > 0) {
+				Utilidades.mostrarEnPantalla("Ventas del cliente eliminadas correctamente.");
+			} else {
+				Utilidades.mostrarEnPantalla("No se encontraron ventas para el cliente con ID: " + idCliente);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			Utilidades.mostrarEnPantalla("Error al eliminar las ventas: " + e.getMessage());
+			tx.rollback();
+		}
+	}
 }
