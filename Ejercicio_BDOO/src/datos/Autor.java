@@ -1,16 +1,18 @@
 package datos;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Autor {
 	private String nombre;
 	private String apellido;
 	private String nacionalidad;
 	private int edad;
-	private List<Libro> libros;
+	private Set<Libro> libros;
 	
-	public Autor(String nombre, String apellido, String nacionalidad, int edad, List<Libro> libros) {
+	public Autor(String nombre, String apellido, String nacionalidad, int edad, Set<Libro> libros) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -18,6 +20,8 @@ public class Autor {
 		this.edad = edad;
 		this.libros = libros;
 	}
+	
+	
 
 	public String getNombre() {
 		return nombre;
@@ -51,11 +55,11 @@ public class Autor {
 		this.edad = edad;
 	}
 
-	public List<Libro> getLibros() {
+	public Set<Libro> getLibros() {
 		return libros;
 	}
 
-	public void setLibros(List<Libro> libros) {
+	public void setLibros(Set<Libro> libros) {
 		this.libros = libros;
 	}
 

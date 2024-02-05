@@ -1,19 +1,21 @@
 package datos;
 
-import java.util.List;
+
+
 import java.util.Objects;
+import java.util.Set;
 
 public class Libro {
 	private String titulo;
-	private int año;
+	private int anyo;
 	private String editorial;
 	private int paginas;
-	private List<Autor>autores;
+	private Set<Autor>autores;
 	
-	public Libro(String titulo, int año, String editorial, int paginas, List<Autor> autores) {
+	public Libro(String titulo, int anyo, String editorial, int paginas, Set<Autor> autores) {
 		super();
 		this.titulo = titulo;
-		this.año = año;
+		this.anyo = anyo;
 		this.editorial = editorial;
 		this.paginas = paginas;
 		this.autores = autores;
@@ -28,11 +30,11 @@ public class Libro {
 	}
 
 	public int getAño() {
-		return año;
+		return anyo;
 	}
 
 	public void setAño(int año) {
-		this.año = año;
+		this.anyo = año;
 	}
 
 	public String getEditorial() {
@@ -51,23 +53,23 @@ public class Libro {
 		this.paginas = paginas;
 	}
 
-	public List<Autor> getAutores() {
+	public Set<Autor> getAutores() {
 		return autores;
 	}
 
-	public void setAutores(List<Autor> autores) {
+	public void setAutores(Set<Autor> autores) {
 		this.autores = autores;
 	}
 
 	@Override
 	public String toString() {
-		return "Libro [titulo=" + titulo + ", año=" + año + ", editorial=" + editorial + ", paginas=" + paginas
+		return "Libro [titulo=" + titulo + ", año=" + anyo + ", editorial=" + editorial + ", paginas=" + paginas
 				+ ", autores=" + autores + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(autores, año, editorial, paginas, titulo);
+		return Objects.hash(autores, anyo, editorial, paginas, titulo);
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		Libro other = (Libro) obj;
-		return Objects.equals(autores, other.autores) && año == other.año && Objects.equals(editorial, other.editorial)
+		return Objects.equals(autores, other.autores) && anyo == other.anyo && Objects.equals(editorial, other.editorial)
 				&& paginas == other.paginas && Objects.equals(titulo, other.titulo);
 	}
 	

@@ -13,6 +13,8 @@ public class Empleado{
 	private Empleado jefe;
 	private Departamento departamento;
 	
+	
+
 	public Empleado(int id_emp, String apellido, String oficio, Date fecha_alta, float salario, float comision,
 			Empleado jefe, Departamento departamento) {
 		super();
